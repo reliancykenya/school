@@ -1,11 +1,14 @@
 import express, { request } from "express";
 import UserRoutes from "./routes/UserRoutes.js"
 import db from "./config/db.js"
+import User from "./models/UserModel.js";
+import cors from 'cors'
 const app = express()
 const port = 5000
 
 try {
   await db.authenticate()
+  User.sync()
   console.log("Database connected successfully.");
 } catch (error) {
   console.log(error);
