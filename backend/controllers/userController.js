@@ -9,48 +9,36 @@ export const createUser = async (req , res) => {
     }
 }
 
-export const getAllUsers = (req, res) => {
-    res.status(200).send({"message": "All users"})
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.findAll()
+        res.json(users)
+    } catch (error) {
+        res.json({message: error.message})
+    }
 }
 
 export const updateUser = async (req, res) => {
     try {
-        console.log(req.params.username)
         await User.update(req.body, {
             where:{
-                username: req.params.username
-                
+                id: req.params.id
             }
         })
-        res.json({message: "Record Updated Successfully"})
-    }   catch (error) {
-        res.json ({message: error.message})
+        res.json({message: "Record updated."})
+    } catch (error) {
+        res.json({message: error.message})
     }
 }
-
 export const deleteUser = async (req, res) => {
     try {
         await User.destroy({
             where:{
                 id: req.params.id
-                           }
-        })
-        res.json({message: "User Deleted Successfully"})
-    }   catch (error) {
-        res.json ({message: error.message})
-    }
-}
-
-export const getUser = async (req, res) => {
-    try {
-        await User.get({
-            where:{
-                id: req.params.id
             }
         })
-        res.json({message: "User Available"})
-    }   catch (error) {
-        res.json ({message: error.message})
+        res.json({message: "User Deleted."})
+    } catch (error) {
+        res.json({message: error.message})
     }
 }
-
