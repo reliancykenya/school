@@ -18,6 +18,19 @@ export const getAllUsers = async (req, res) => {
     }
 }
 
+export const getUserById = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.json(users[0]);
+    } catch (error) {
+        res.json({ message: error.message });
+    }  
+}
+
 export const updateUser = async (req, res) => {
     try {
         await User.update(req.body, {
